@@ -26,7 +26,7 @@
     } elseif (!$author && $category) {
         $quote = $quotes->getQuotesbyCategory($category);
     } elseif (!$author && !$category) {
-        $quote = $quotes->getQuotes();
+        $quote = $quotes->getQuotes($limit);
     }
 
     $author_res = $authors->getAuthors();
