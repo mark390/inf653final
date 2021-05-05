@@ -105,7 +105,7 @@
         public function deleteQuote($id) {
             $query = 'DELETE FROM quotes WHERE id = :id';
             $statement = $this->conn->prepare($query);
-            $statement->bindValue(':id', $id);
+            $statement->bindValue(':id', $id, PDO::PARAM_INT);
             $statement->execute();
             $statement->closeCursor();
         }
