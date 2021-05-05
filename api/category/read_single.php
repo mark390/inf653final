@@ -3,11 +3,16 @@
     header('Content-Type: application/json');
 
     include_once '../../config/Database.php';
-    include_once '../../models/Quote.php';
+    include_once '../../models/Category.php';
 
-    $id = isset($_GET['id']) ? $_GET['id'] : die();
+    $database = new Database();
+    $db = $database->connect();
 
-    $res = Quote::getQuotesbyID($id);
+    $categories = new Category($db);
+
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+    $res = $categories->getCategoriesbyID($id);
 
     if (count($res) > 0) {
         $p_array = array();
@@ -16,8 +21,6 @@
         foreach ($res as $r) {
             $post_item = array(
                 'id' => $r['id'],
-                'quote' => $r['quote'],
-                'author' => $r['author'],
                 'category' => $r['category']
             );
             array_push($p_array['data'], $post_item);
@@ -26,5 +29,5 @@
         echo json_encode($p_array);
 
     } else {
-        echo json_encode(array('message' => 'No Post Found'));
+        echo json_encode(array('message' => 'No Category Found'));
     }

@@ -1,23 +1,19 @@
 <?php
     class Database {
-        private static $dsn = 'mysql:host=localhost;dbname=quotesdb';
-        private static $username = 'root';
-        //private static $password = '';
-        private static $db;
+        private $host = 'localhost';
+        private $dbname = 'quotesdb';
+        private $username = 'root';
+        //private $password = ''
+        private $conn;
 
-        private function __construct() {}
-
-        public static function getDB() {
-            if (!isset(self::$db)) {
-                try {
-                    self::$db = new PDO(self::$dsn, self::$username);
-                } catch (PDOException $e) {
-                    $error_msg = 'Database Error: ' ;
-                    $error_msg .= $e->getMessage();
-                    echo $error_msg;
-                    exit();
+        public function connect() {
+            $this->conn = null;
+            try {
+              $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbname, $this->username);
+              $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch(PDOException $e) {
+                echo 'Connection Error: ' . $e->getMessage();
             }
-        }
-            return self::$db;
-}
+            return $this->conn;
+    }
 }

@@ -5,23 +5,21 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
     require '../../config/Database.php';
-    require '../../models/Quote.php';
+    require '../../models/Author.php';
 
     $database = new Database();
     $db = $database->connect();
-    $quotes = new Quote($db);
+    $authors = new Author($db);
     
     $data = json_decode(file_get_contents('php://input'));
-    $quote = $data->quote;
-    $aid = $data->authorId;
-    $cid = $data->categoryId;
+    $author = $data->author;
 
-    $before = $quotes->getCount();
-    $result = $quotes->createQuote($quote, $aid, $cid);
-    $after = $quotes->getCount();
+    $before = $authors->getCount();
+    $result = $authors->createAuthor($author);
+    $after = $authors->getCount();
 
     if ($after - $before != 1) {
-        echo json_encode(array('message' => 'Quote Not Created'));
+        echo json_encode(array('message' => 'Author Not Created'));
     } else {
-        echo json_encode(array('message' => 'Quote Created'));
+        echo json_encode(array('message' => 'Author Created'));
     }

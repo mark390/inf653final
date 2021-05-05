@@ -1,7 +1,7 @@
 <?php
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
-    header('Access-Control-Allow-Methods: POST');
+    header('Access-Control-Allow-Methods: PUT');
     header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
     require '../../config/Database.php';
@@ -13,15 +13,9 @@
     
     $data = json_decode(file_get_contents('php://input'));
     $quote = $data->quote;
+    $id = $data->id;
     $aid = $data->authorId;
     $cid = $data->categoryId;
 
-    $before = $quotes->getCount();
-    $result = $quotes->createQuote($quote, $aid, $cid);
-    $after = $quotes->getCount();
-
-    if ($after - $before != 1) {
-        echo json_encode(array('message' => 'Quote Not Created'));
-    } else {
-        echo json_encode(array('message' => 'Quote Created'));
-    }
+    $result = $quotes->updateQuote($quote, $aid, $cid, $id);
+    echo json_encode(array('message' => 'Quote Updated'));
