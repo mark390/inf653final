@@ -14,6 +14,10 @@
 
     $author = filter_input(INPUT_POST, 'author', FILTER_VALIDATE_INT);
     $category = filter_input(INPUT_POST, 'category', FILTER_VALIDATE_INT);
+    $limit = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT);
+    if (!$limit) {
+        $limit = 30;
+    }
 
     if ($author && $category) {
         $quote = $quotes->getQuotesMulti($author, $category);
