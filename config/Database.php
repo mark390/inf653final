@@ -3,7 +3,7 @@
         private $host = 'wcwimj6zu5aaddlj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
         private $dbname = 'y1y12yxrz3q0ak3k';
         private $username = 'vf6wblmltrr7g6gh';
-        private $password = 'w0n4bshsd6j1ybzh';
+        private $password = '';
         private $conn;
 
         public function connect() {
